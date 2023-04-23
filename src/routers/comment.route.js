@@ -59,7 +59,7 @@ router.get("/:id", isAuth, async (request, response) => {
 }
 );
 
-router.post("/:id", isAuth, async (request, response) => {
+router.post("/:id", async (request, response) => {
     try {
         const id = request.params.id;
         const data = request.body;

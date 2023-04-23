@@ -23,22 +23,20 @@ const isAuth =(req, res, next) => {
 const isAdmin = async (request, response, next) => {
     try {
 
-        const authorization = request.headers.authorization || ''
-
-        const token = authorization.replace('Bearer ', '')
+        const token = req.headers.authorization.split(' ')[1];
 
         const tokenPayload = jwt.verify(token)
 
         if (!tokenPayload) throw new Error('Invalid authorization')
 
-        const koderId = tokenPayload.id
+        const UserId = tokenPayload.id
 
-        const koderFound = await getKoderById(koderId)
+        const UserFound = await getUserById(UserId)
 
-        if (!koderFound) throw new Error('Invalid authorization')
+        if (!UserFound) throw new Error('Invalid authorization')
 
-        const { role = "user" } = koderFound;
-        console.log(`The user with id ${koderId} has a role ${role}`)
+        const { role = "user" } = UserFound;
+        console.log(`The user with id ${UserId} has a role ${role}`)
 
         if (role === "admin") {
             next()

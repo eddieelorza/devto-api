@@ -1,10 +1,26 @@
 import { User } from "../models/user.module.js";
+import bcrypt from '../libs/bcrypt.js'
+
 
 const createUser = async (userData) => {
-  return User.create(userData);
+  const { email, password } = userData;
+  const userFound = await User.findOne({ email });
+
+  console.log(userFound);
+  console.log(userData);
+
+
+  if (userFound) {
+    throw new Error("Email already exists");
+  }
+
+  const hashedPassword = await bcrypt.hash(password);
+
+ return User.create({ ...userData, password: hashedPassword });
+
 };
 
-const getUsers = async (filters) => {
+const getUsers = async (filters = {}) => {
   return User.find(filters);
 };
 

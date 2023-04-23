@@ -1,9 +1,10 @@
 import express from "express";
 import {createComment, getComments, getCommentById, updateComment, deleComment} from "../useCases/comment.useCase.js";
+import { isAuth } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-router.get("/", async (request, response) => {
+router.get("/", isAuth, async (request, response) => {
     try {
         const { name, date, user } = request.query;
     
@@ -38,7 +39,7 @@ router.get("/", async (request, response) => {
     }
 });
 
-router.get("/:id", async (request, response) => {
+router.get("/:id", isAuth, async (request, response) => {
     try {
         const id = request.params.id;
 
@@ -58,7 +59,7 @@ router.get("/:id", async (request, response) => {
 }
 );
 
-router.post("/:id", async (request, response) => {
+router.post("/:id", isAuth, async (request, response) => {
     try {
         const id = request.params.id;
         const data = request.body;
@@ -80,7 +81,7 @@ router.post("/:id", async (request, response) => {
 );
 
 
-router.patch("/:id", async (request, response) => {
+router.patch("/:id", isAuth, async (request, response) => {
     try {
         const id = request.params.id;
         const updateData = request.body;
@@ -100,7 +101,7 @@ router.patch("/:id", async (request, response) => {
 }
 );
 
-router.delete("/:id", async (request, response) => {
+router.delete("/:id", isAuth, async (request, response) => {
     try {
         const id = request.params.id;
         const commentDeleted = await deleComment(id);

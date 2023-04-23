@@ -11,7 +11,8 @@ const router = express.Router();
 
 router.get("/", async (request, response) => {
   try {
-    const { name, date, relevant } = request.query;
+    const { name, date, relevant,user } = request.query;
+    
 
     let filters = {};
 
@@ -21,7 +22,14 @@ router.get("/", async (request, response) => {
 
     if (relevant) filters = { ...filters, relevant };
 
+    if (user) filters = { ...filters, user };
+
+
     const postFound = await getPosts(filters);
+    const objec = Object.values(postFound).map((post) => {
+      return post.user;
+    });
+    console.log(objec);
 
     response.json({
       success: true,
@@ -99,6 +107,7 @@ router.delete("/:id", async (request, response) => {
 router.post("/:id", async (request, response) => {
   try {
     const newData = request.body;
+    console.log(newData);
 
     const newPost = await createPost(newData);
     response.json({

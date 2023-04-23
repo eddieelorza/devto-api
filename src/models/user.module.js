@@ -1,4 +1,4 @@
-import mongoose, { Schema, mongo } from "mongoose";
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
     trim: true,
   },
   age: {
-    type: number,
+    type: Number,
     min: 1,
     max: 100,
     required: true,

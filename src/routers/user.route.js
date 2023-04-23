@@ -96,11 +96,11 @@ router.delete("/:id", async (request, response) => {
   }
 });
 
-router.post("/:id", async (request, response) => {
+router.post("/", async (request, response) => {
   try {
     const newData = request.body;
 
-    const newPost = await createUser(newData);
+    const newUser = await createUser(newData);
     response.json({
       success: true,
       data: {
@@ -110,7 +110,7 @@ router.post("/:id", async (request, response) => {
   } catch (error) {
     response.status(400).json({
       success: false,
-      message: "Error at create User",
+      message:error.message,
     });
   }
 });

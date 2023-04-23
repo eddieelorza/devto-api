@@ -23,7 +23,7 @@ const isAuth =(req, res, next) => {
 const isAdmin = async (request, response, next) => {
     try {
 
-        const token = req.headers.authorization.split(' ')[1];
+        const token = request.headers.authorization.split(' ')[1];
 
         const tokenPayload = jwt.verify(token)
 

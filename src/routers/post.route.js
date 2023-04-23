@@ -1,12 +1,12 @@
 import express from "express";
 import {
   getPosts,
-  getPostById,
+  getPostByUserId,
   createPost,
   updatePost,
   delePost,
 } from "../useCases/post.useCase.js";
-
+import { isAuth } from '../middlewares/auth.middleware.js'
 const router = express.Router();
 
 router.get("/", async (request, response) => {
@@ -45,11 +45,11 @@ router.get("/", async (request, response) => {
   }
 });
 
-router.get("/:id", async (request, response) => {
+router.get("/:userId", isAuth, async (request, response) => {
   try {
-    const id = request.params.id;
+    const {userId}= request.params
 
-    const postFound = await getPostById(id);
+    const postFound = await getPostByUserId(userId);
     response.json({
       success: true,
       data: {
@@ -64,7 +64,7 @@ router.get("/:id", async (request, response) => {
   }
 });
 
-router.patch("/:id", async (request, response) => {
+router.patch("/:id", isAuth, async (request, response) => {
   try {
     const id = request.params.id;
 
@@ -85,7 +85,7 @@ router.patch("/:id", async (request, response) => {
   }
 });
 
-router.delete("/:id", async (request, response) => {
+router.delete("/:id", isAuth, async (request, response) => {
   try {
     const id = request.params.id;
 
@@ -104,7 +104,7 @@ router.delete("/:id", async (request, response) => {
   }
 });
 
-router.post("/:id", async (request, response) => {
+router.post("/:id", isAuth, async (request, response) => {
   try {
     const newData = request.body;
     console.log(newData);

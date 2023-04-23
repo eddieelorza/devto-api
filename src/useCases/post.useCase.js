@@ -8,9 +8,10 @@ const getPosts = async (filters) => {
   return Post.find(filters);
 };
 
-const getPostById = async (id) => {
-  return Post.findById(id);
+const getPostByUserId = async (userId) => {
+  return Post.find({ user: userId });
 };
+
 
 const updatePost = async (id, dataUpdate, options = {}) => {
   return Post.findByIdAndUpdate(id, dataUpdate, { new: true }, ...options);
@@ -20,4 +21,4 @@ const delePost = async (id) => {
   return Post.findByIdAndDelete(id);
 };
 
-export { createPost, getPosts, getPostById, updatePost, delePost };
+export { createPost, getPosts, getPostByUserId, updatePost, delePost };

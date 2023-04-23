@@ -6,10 +6,12 @@ import {
   updateUser,
   deleteUser,
 } from "../useCases/user.useCase.js";
+import { isAdmin, isAuth } from '../middlewares/auth.middleware.js'
+
 
 const router = express.Router();
 
-router.get("/", async (request, response) => {
+router.get("/",isAuth, async (request, response) => {
   try {
     const { name, age, gender } = request.query;
 
@@ -37,7 +39,7 @@ router.get("/", async (request, response) => {
   }
 });
 
-router.get("/:id", async (request, response) => {
+router.get("/:id", isAuth, async (request, response) => {
   try {
     const id = request.params.id;
 
@@ -56,7 +58,7 @@ router.get("/:id", async (request, response) => {
   }
 });
 
-router.patch("/:id", async (request, response) => {
+router.patch("/:id", isAdmin, async (request, response) => {
   try {
     const id = request.params.id;
 
@@ -77,7 +79,7 @@ router.patch("/:id", async (request, response) => {
   }
 });
 
-router.delete("/:id", async (request, response) => {
+router.delete("/:id", isAdmin, async (request, response) => {
   try {
     const id = request.params.id;
 

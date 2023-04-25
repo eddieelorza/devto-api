@@ -6,13 +6,12 @@ import {
   updatePost,
   delePost,
 } from "../useCases/post.useCase.js";
-import { isAuth } from '../middlewares/auth.middleware.js'
+import { isAuth } from "../middlewares/auth.middleware.js";
 const router = express.Router();
 
 router.get("/", async (request, response) => {
   try {
-    const { name, date, relevant,user } = request.query;
-    
+    const { name, date, relevant, user } = request.query;
 
     let filters = {};
 
@@ -23,7 +22,6 @@ router.get("/", async (request, response) => {
     if (relevant) filters = { ...filters, relevant };
 
     if (user) filters = { ...filters, user };
-
 
     const postFound = await getPosts(filters);
     const objec = Object.values(postFound).map((post) => {
@@ -47,7 +45,7 @@ router.get("/", async (request, response) => {
 
 router.get("/:userId", isAuth, async (request, response) => {
   try {
-    const {userId}= request.params
+    const { userId } = request.params;
 
     const postFound = await getPostByUserId(userId);
     response.json({
@@ -104,7 +102,7 @@ router.delete("/:id", isAuth, async (request, response) => {
   }
 });
 
-router.post("/:id", isAuth, async (request, response) => {
+router.post("/", isAuth, async (request, response) => {
   try {
     const newData = request.body;
     console.log(newData);
@@ -119,7 +117,7 @@ router.post("/:id", isAuth, async (request, response) => {
   } catch (error) {
     response.status(400).json({
       success: false,
-      message: "Error at create Post",
+      message: error.message,
     });
   }
 });

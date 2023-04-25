@@ -8,15 +8,12 @@ const userSchema = new mongoose.Schema({
     maxLenght: 100,
     trim: true,
   },
-  age: {
-    type: Number,
-    min: 1,
-    max: 100,
+  dateRegistration: {
+    type: String,
     required: true,
   },
-  gender: {
+  nationality: {
     type: String,
-    enum: ["m", "h", "o"],
     required: true,
   },
   email: {

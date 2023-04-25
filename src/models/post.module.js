@@ -10,6 +10,7 @@ const postSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
+    default: Date.now,
     required: true,
   },
   imgSrc: {
@@ -35,11 +36,8 @@ const postSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
-    required: true
+    required: true,
   },
-
-
-
 });
 
 const Post = mongoose.model("post", postSchema);
